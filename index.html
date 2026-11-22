@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Reto Smoke Killer</title>
+<title>Smoke Killer Challenge</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap">
 <style>
@@ -91,9 +91,9 @@ h2{font-family:'Space Grotesk',sans-serif;font-size:clamp(32px,4vw,54px);line-he
 <body>
 <div class="app">
 <header>
-  <div class="brand">RETO SMOKE <b>KILLER</b></div>
-  <nav id="nav" aria-label="Secciones"></nav>
-  <div class="score-strip" id="strip" aria-label="Puntaje"></div>
+  <div class="brand">SMOKE <b>KILLER</b> CHALLENGE</div>
+  <nav id="nav" aria-label="Sections"></nav>
+  <div class="score-strip" id="strip" aria-label="Score"></div>
 </header>
 <main id="main"></main>
 </div>
@@ -102,45 +102,45 @@ h2{font-family:'Space Grotesk',sans-serif;font-size:clamp(32px,4vw,54px);line-he
 const TEAM_COLORS = ['#2F9E5B', '#2B7BD6', '#E0A23A', '#B5468C'];
 const S = {
   view: 'inicio',
-  teams: [{ name: 'Equipo Verde', pts: 0 }, { name: 'Equipo Azul', pts: 0 }, { name: 'Equipo Amarillo', pts: 0 }],
+  teams: [{ name: 'Green Team', pts: 0 }, { name: 'Blue Team', pts: 0 }, { name: 'Yellow Team', pts: 0 }],
   r1: 0, hands: [0, 0, 0, 0],
   q: 0, revealed: false, awarded: {},
   timer: null, left: 20,
   exp: 0, expTimer: null, expLeft: 60,
   pledges: [0, 0, 0, 0, 0, 0],
 };
-const VIEWS = [['inicio', 'Inicio'], ['r1', '1 · ¿Y vos?'], ['r2', '2 · Trivia'], ['r3', '3 · Experimento'], ['final', 'Compromiso y ganador']];
+const VIEWS = [['inicio', 'Start'], ['r1', '1 · What about you?'], ['r2', '2 · Trivia'], ['r3', '3 · Experiment'], ['final', 'Pledge & winner']];
 
 const R1 = [
-  'Levantá la mano si alguna vez tosiste por el humo de un bus o un carro.',
-  'Levantá la mano si caminás o esperás el bus cerca de una calle con mucho tráfico.',
-  'Levantá la mano si conocés a alguien con asma o alergias.',
-  'Levantá la mano si alguna vez viste el cielo gris por el humo o la contaminación.',
+  'Raise your hand if you have ever coughed because of smoke from a bus or a car.',
+  'Raise your hand if you walk or wait for the bus next to a busy street.',
+  'Raise your hand if you know someone with asthma or allergies.',
+  'Raise your hand if you have ever seen the sky turn grey from smoke or pollution.',
 ];
 
 const QS = [
-  { q: '¿Qué gas se “comen” las microalgas del Smoke Killer?', o: ['Oxígeno', 'Dióxido de carbono (CO₂)', 'Nitrógeno', 'Helio'], a: 1,
-    e: 'Las microalgas usan el CO₂ del aire para crecer, igual que las plantas. El carbono se queda en su cuerpo (la biomasa).' },
-  { q: 'En la fotosíntesis, ¿de dónde sale el oxígeno que se libera?', o: ['Del CO₂', 'Del agua (H₂O)', 'Del sol', 'De los nutrientes'], a: 1,
-    e: '¡La pregunta trampa! La luz rompe moléculas de agua: 2 H₂O → O₂ + 4 H⁺ + 4 e⁻. El oxígeno viene del agua, no del CO₂.' },
-  { q: '¿Qué parte del Smoke Killer atrapa el hollín y el polvo del humo?', o: ['Las microalgas', 'El filtro', 'El panel solar', 'El tanque'], a: 1,
-    e: 'Las algas se comen el CO₂, pero no el hollín. Por eso el aire pasa primero por un filtro que atrapa las partículas.' },
-  { q: '¿Qué tan pequeña es una partícula PM2.5 comparada con el grosor de un pelo humano?', o: ['Del mismo tamaño', 'La mitad', 'Unas 30 veces más pequeña', 'Más grande que el pelo'], a: 2,
-    e: 'Un pelo mide unos 70 micrómetros; una PM2.5 mide 2,5 o menos. Son tan pequeñas que llegan hasta lo más profundo de los pulmones.',
-    s: 'Fuente: EPA (Agencia de Protección Ambiental de EE. UU.)' },
-  { q: 'Según la OMS, ¿qué porcentaje de la población mundial respira aire que supera sus límites de calidad?', o: ['25 %', '50 %', '75 %', '99 %'], a: 3,
-    e: 'Casi todo el mundo: el 99 % de la población respira aire que supera los límites recomendados por la OMS.',
-    s: 'Fuente: Organización Mundial de la Salud, 2022' },
-  { q: '¿Cuántas muertes al año relaciona la OMS con la contaminación del aire?', o: ['70 mil', '700 mil', '7 millones', '70 millones'], a: 2,
-    e: 'La OMS calcula unos 7 millones de muertes prematuras al año por el aire contaminado, en la calle y dentro de las casas.',
-    s: 'Fuente: Organización Mundial de la Salud' },
-  { q: '¿Qué se hace con las algas que se cosechan del Smoke Killer?', o: ['Se tiran a la basura', 'Abono o biogás', 'Se queman', 'Se devuelven a la calle'], a: 1,
-    e: 'La biomasa de algas sirve como abono para plantas o para producir biogás. Nada se desperdicia.' },
-  { q: 'Por cada 1 kg de CO₂ que fijan las algas, ¿cuánto oxígeno liberan, más o menos?', o: ['Nada', 'Unos 0,73 kg', 'Unos 5 kg', 'Unos 100 kg'], a: 1,
-    e: 'Por la ecuación de la fotosíntesis (6 CO₂ + 6 H₂O → C₆H₁₂O₆ + 6 O₂): 6 × 32 g de O₂ por cada 6 × 44 g de CO₂ ≈ 0,73.' },
+  { q: 'Which gas do the microalgae inside Smoke Killer “eat”?', o: ['Oxygen', 'Carbon dioxide (CO₂)', 'Nitrogen', 'Helium'], a: 1,
+    e: 'Microalgae use CO₂ from the air to grow, just like plants. The carbon stays in their bodies (the biomass).' },
+  { q: 'In photosynthesis, where does the released oxygen come from?', o: ['From CO₂', 'From water (H₂O)', 'From the sun', 'From the nutrients'], a: 1,
+    e: 'Trick question! Light splits water molecules: 2 H₂O → O₂ + 4 H⁺ + 4 e⁻. The oxygen comes from water, not from CO₂.' },
+  { q: 'Which part of Smoke Killer traps the soot and dust in smoke?', o: ['The microalgae', 'The filter', 'The solar panel', 'The tank'], a: 1,
+    e: 'The algae eat CO₂, but not soot. That is why the air first goes through a filter that traps the particles.' },
+  { q: 'How small is a PM2.5 particle compared with the width of a human hair?', o: ['The same size', 'Half as wide', 'About 30 times smaller', 'Bigger than a hair'], a: 2,
+    e: 'A hair is about 70 micrometers wide; PM2.5 is 2.5 or less. They are small enough to reach deep into the lungs.',
+    s: 'Source: U.S. Environmental Protection Agency (EPA)' },
+  { q: 'According to the WHO, what share of the world population breathes air that exceeds its quality limits?', o: ['25%', '50%', '75%', '99%'], a: 3,
+    e: 'Almost everyone: 99% of people breathe air that exceeds the limits recommended by the WHO.',
+    s: 'Source: World Health Organization, 2022' },
+  { q: 'How many deaths per year does the WHO link to air pollution?', o: ['70 thousand', '700 thousand', '7 million', '70 million'], a: 2,
+    e: 'The WHO estimates about 7 million premature deaths a year from polluted air, outdoors and inside homes.',
+    s: 'Source: World Health Organization' },
+  { q: 'What happens to the algae harvested from Smoke Killer?', o: ['Thrown in the trash', 'Fertilizer or biogas', 'Burned', 'Released into the street'], a: 1,
+    e: 'The algae biomass becomes plant fertilizer or is used to make biogas. Nothing goes to waste.' },
+  { q: 'For every 1 kg of CO₂ the algae fix, roughly how much oxygen do they release?', o: ['None', 'About 0.73 kg', 'About 5 kg', 'About 100 kg'], a: 1,
+    e: 'From the photosynthesis equation (6 CO₂ + 6 H₂O → C₆H₁₂O₆ + 6 O₂): 6 × 32 g of O₂ for every 6 × 44 g of CO₂ ≈ 0.73.' },
 ];
 
-const PLEDGES = ['Caminar, ir en bici o en bus cuando pueda', 'No quemar basura ni hojas', 'Sembrar y cuidar un árbol', 'Apagar el motor cuando el carro está parado', 'Compartir el carro (jalón) con otros', 'Contarle a mi familia lo que aprendí hoy'];
+const PLEDGES = ['Walk, bike or take the bus when I can', 'Never burn trash or leaves', 'Plant and care for a tree', 'Turn off the engine when the car is parked', 'Share rides with others', 'Tell my family what I learned today'];
 
 const $ = (s, r = document) => r.querySelector(s);
 const esc = (t) => String(t).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -155,27 +155,27 @@ function renderNav() {
 
 function vInicio() {
   return `
-  <div class="eyebrow">Dinámica con el público · 12 minutos</div>
-  <h1>¿Qué tan limpio es el aire <b>que respirás?</b></h1>
-  <p class="lead">Formen equipos. Vamos a jugar, adivinar y hacer un experimento en vivo para entender cómo funciona el Smoke Killer y por qué nos importa a todos.</p>
+  <div class="eyebrow">Audience activity · 12 minutes</div>
+  <h1>How clean is the air <b>you breathe?</b></h1>
+  <p class="lead">Form teams. We will play, guess and run a live experiment to understand how Smoke Killer works and why it matters to all of us.</p>
   <div class="teams">
-    ${S.teams.map((t, i) => `<label class="team-in"><span class="sw" style="background:${TEAM_COLORS[i]}"></span><span class="hidden">Nombre del equipo ${i + 1}</span><input data-team="${i}" value="${esc(t.name)}" aria-label="Nombre del equipo ${i + 1}"></label>`).join('')}
+    ${S.teams.map((t, i) => `<label class="team-in"><span class="sw" style="background:${TEAM_COLORS[i]}"></span><span class="hidden">Team ${i + 1} name</span><input data-team="${i}" value="${esc(t.name)}" aria-label="Team ${i + 1} name"></label>`).join('')}
   </div>
   <div class="row" style="margin-top:18px">
-    <button class="btn ghost" data-act="addTeam" ${S.teams.length >= 4 ? 'disabled' : ''}>+ Agregar equipo</button>
-    <button class="btn ghost" data-act="rmTeam" ${S.teams.length <= 2 ? 'disabled' : ''}>− Quitar equipo</button>
-    <button class="btn green" data-go="r1">Empezar →</button>
+    <button class="btn ghost" data-act="addTeam" ${S.teams.length >= 4 ? 'disabled' : ''}>+ Add team</button>
+    <button class="btn ghost" data-act="rmTeam" ${S.teams.length <= 2 ? 'disabled' : ''}>− Remove team</button>
+    <button class="btn green" data-go="r1">Start →</button>
   </div>
   <details class="guide card">
-    <summary>Guía para el presentador</summary>
+    <summary>Presenter guide</summary>
     <table>
-      <tr><th>Parte</th><th>Tiempo</th><th>Qué hacer</th></tr>
-      <tr><td>1 · ¿Y vos?</td><td>2 min</td><td>Leé cada frase en voz alta. Contá cuántas manos se levantan y anotalo con + / −. Cierra con el dato de la OMS.</td></tr>
-      <tr><td>2 · Trivia</td><td>5 min</td><td>Cada equipo responde con los dedos (1, 2, 3 o 4). Usá el cronómetro, revelá la respuesta y marcá a los equipos que acertaron.</td></tr>
-      <tr><td>3 · Experimento</td><td>3 min</td><td>Un voluntario por equipo sopla con una pajilla en el vaso con indicador. Todos ven cómo cambia de color. Leé la explicación.</td></tr>
-      <tr><td>Compromiso</td><td>2 min</td><td>Cada persona elige una acción; contá las manos por opción. Termina anunciando al equipo ganador.</td></tr>
+      <tr><th>Part</th><th>Time</th><th>What to do</th></tr>
+      <tr><td>1 · What about you?</td><td>2 min</td><td>Read each line out loud. Count the raised hands and log them with + / −. Close with the WHO fact.</td></tr>
+      <tr><td>2 · Trivia</td><td>5 min</td><td>Each team answers with fingers (1, 2, 3 or 4). Run the timer, reveal the answer and mark the teams that got it right.</td></tr>
+      <tr><td>3 · Experiment</td><td>3 min</td><td>One volunteer per team blows through a straw into the cup with indicator. Everyone watches the color change. Read the explanation.</td></tr>
+      <tr><td>Pledge</td><td>2 min</td><td>Everyone picks one action; count hands per option. End by announcing the winning team.</td></tr>
     </table>
-    <p class="foot">Atajo: las flechas ← → del teclado avanzan o retroceden.</p>
+    <p class="foot">Shortcut: the ← → arrow keys move back and forward.</p>
   </details>`;
 }
 
@@ -183,32 +183,32 @@ function vR1() {
   const i = S.r1;
   if (i >= R1.length) {
     const total = S.hands.reduce((a, b) => a + b, 0);
-    return `<div class="eyebrow">Parte 1 · ¿Y vos?</div>
-    <h2>No es algo lejano: nos pasa a todos.</h2>
-    <p class="lead">Entre las cuatro preguntas se levantaron <b>${total}</b> manos.</p>
+    return `<div class="eyebrow">Part 1 · What about you?</div>
+    <h2>It is not far away: it happens to all of us.</h2>
+    <p class="lead">Across the four questions, <b>${total}</b> hands went up.</p>
     <div class="card" style="margin-top:28px;display:flex;gap:28px;flex-wrap:wrap;align-items:center">
       <div style="font-family:'Space Grotesk',sans-serif;font-size:120px;line-height:1;color:var(--red)">99 %</div>
-      <div style="flex:1 1 380px;font-size:26px;line-height:1.4">de la población mundial respira aire que supera los límites de calidad recomendados por la OMS.<span class="foot" style="display:block">Fuente: Organización Mundial de la Salud, 2022</span></div>
+      <div style="flex:1 1 380px;font-size:26px;line-height:1.4">of the world population breathes air that exceeds the quality limits recommended by the WHO.<span class="foot" style="display:block">Source: World Health Organization, 2022</span></div>
     </div>
-    <div class="row" style="margin-top:28px"><button class="btn ghost" data-act="r1prev">← Atrás</button><button class="btn green" data-go="r2">Ir a la trivia →</button></div>`;
+    <div class="row" style="margin-top:28px"><button class="btn ghost" data-act="r1prev">← Back</button><button class="btn green" data-go="r2">Go to trivia →</button></div>`;
   }
-  return `<div class="eyebrow">Parte 1 · ¿Y vos? · ${i + 1} de ${R1.length}</div>
+  return `<div class="eyebrow">Part 1 · What about you? · ${i + 1} of ${R1.length}</div>
   <p class="big-q">${R1[i]}</p>
-  <div class="counter" aria-label="Manos levantadas">
-    <button class="sq" data-act="handDown" aria-label="Restar una mano">−</button>
+  <div class="counter" aria-label="Raised hands">
+    <button class="sq" data-act="handDown" aria-label="Remove one hand">−</button>
     <div class="n" aria-live="polite">${S.hands[i]}</div>
-    <button class="sq" data-act="handUp" aria-label="Sumar una mano">+</button>
-    <span class="kbd">manos levantadas</span>
+    <button class="sq" data-act="handUp" aria-label="Add one hand">+</button>
+    <span class="kbd">raised hands</span>
   </div>
   <div class="progress"><span style="width:${((i + 1) / R1.length) * 100}%"></span></div>
-  <div class="row" style="margin-top:28px"><button class="btn ghost" data-act="r1prev" ${i === 0 ? 'disabled' : ''}>← Atrás</button><button class="btn" data-act="r1next">Siguiente →</button></div>`;
+  <div class="row" style="margin-top:28px"><button class="btn ghost" data-act="r1prev" ${i === 0 ? 'disabled' : ''}>← Back</button><button class="btn" data-act="r1next">Next →</button></div>`;
 }
 
 function vR2() {
   if (S.q >= QS.length) {
-    return `<div class="eyebrow">Parte 2 · Trivia</div><h2>¡Terminó la trivia!</h2>
+    return `<div class="eyebrow">Part 2 · Trivia</div><h2>Trivia complete!</h2>
     ${podium()}
-    <div class="row" style="margin-top:28px"><button class="btn ghost" data-act="qprev">← Última pregunta</button><button class="btn green" data-go="r3">Ir al experimento →</button></div>`;
+    <div class="row" style="margin-top:28px"><button class="btn ghost" data-act="qprev">← Last question</button><button class="btn green" data-go="r3">Go to the experiment →</button></div>`;
   }
   const Q = QS[S.q];
   const colors = ['#2B7BD6', '#E0A23A', '#B5468C', '#2F9E5B'];
@@ -217,76 +217,76 @@ function vR2() {
     return `<div class="opt ${cls}"><span class="l" style="background:${colors[k]}">${k + 1}</span>${o}</div>`;
   }).join('');
   const aw = S.awarded[S.q] || [];
-  return `<div class="eyebrow">Parte 2 · Trivia · Pregunta ${S.q + 1} de ${QS.length}</div>
+  return `<div class="eyebrow">Part 2 · Trivia · Question ${S.q + 1} of ${QS.length}</div>
   <p class="big-q">${Q.q}</p>
   <div class="opts">${opts}</div>
   ${S.revealed ? `<div class="explain">${Q.e}${Q.s ? `<span class="src">${Q.s}</span>` : ''}</div>
-    <div class="award"><span class="tag">¿Quién acertó? (+1)</span>${S.teams.map((t, i) => `<button class="tbtn" data-award="${i}" aria-pressed="${aw.includes(i)}"><span class="sw" style="background:${TEAM_COLORS[i]}"></span>${esc(t.name)}</button>`).join('')}</div>` : ''}
+    <div class="award"><span class="tag">Who got it right? (+1)</span>${S.teams.map((t, i) => `<button class="tbtn" data-award="${i}" aria-pressed="${aw.includes(i)}"><span class="sw" style="background:${TEAM_COLORS[i]}"></span>${esc(t.name)}</button>`).join('')}</div>` : ''}
   <div class="row" style="margin-top:28px">
-    <button class="btn ghost" data-act="qprev" ${S.q === 0 ? 'disabled' : ''}>← Atrás</button>
-    ${S.revealed ? `<button class="btn" data-act="qnext">Siguiente pregunta →</button>` : `<button class="btn ghost" data-act="qtimer">${S.timer ? 'Pausar' : 'Cronómetro 20 s'}</button><span class="timer ${S.left <= 5 ? 'low' : ''}" aria-live="polite">${S.left}</span><button class="btn green" data-act="reveal">Revelar respuesta</button>`}
+    <button class="btn ghost" data-act="qprev" ${S.q === 0 ? 'disabled' : ''}>← Back</button>
+    ${S.revealed ? `<button class="btn" data-act="qnext">Next question →</button>` : `<button class="btn ghost" data-act="qtimer">${S.timer ? 'Pause' : '20 s timer'}</button><span class="timer ${S.left <= 5 ? 'low' : ''}" aria-live="polite">${S.left}</span><button class="btn green" data-act="reveal">Reveal answer</button>`}
   </div>`;
 }
 
 function vR3() {
   const step = S.exp;
-  return `<div class="eyebrow">Parte 3 · Experimento en vivo</div>
-  <h2>El soplido: ¿se puede ver el CO₂?</h2>
+  return `<div class="eyebrow">Part 3 · Live experiment</div>
+  <h2>The breath test: can you see CO₂?</h2>
   <div class="grid2" style="margin-top:26px">
     <div class="card">
-      <div class="eyebrow" style="color:var(--ink)">Necesitan</div>
+      <div class="eyebrow" style="color:var(--ink)">You need</div>
       <ul class="mat">
-        <li>2 vasos transparentes con agua</li>
-        <li>Indicador de pH: azul de bromotimol (del laboratorio del colegio o de un kit de pH para peceras), o jugo de repollo morado</li>
-        <li>Pajillas, una por voluntario</li>
-        <li>Opcional: un vaso preparado antes con una ramita de planta acuática bajo el sol</li>
+        <li>2 clear cups of water</li>
+        <li>A pH indicator: bromothymol blue (from the school lab or an aquarium pH test kit), or red cabbage juice</li>
+        <li>Straws, one per volunteer</li>
+        <li>Optional: a cup prepared earlier with a sprig of aquatic plant left in the sun</li>
       </ul>
       <div class="colors">
-        <span style="display:flex;align-items:center;gap:10px"><span class="vial" style="background:#3C7FD0"></span>Antes</span>
+        <span style="display:flex;align-items:center;gap:10px"><span class="vial" style="background:#3C7FD0"></span>Before</span>
         <span aria-hidden="true">→</span>
-        <span style="display:flex;align-items:center;gap:10px"><span class="vial" style="background:#E3C93A"></span>Después de soplar</span>
+        <span style="display:flex;align-items:center;gap:10px"><span class="vial" style="background:#E3C93A"></span>After blowing</span>
       </div>
-      <p class="foot">Con azul de bromotimol: de azul a amarillo-verdoso. Con repollo morado (y una pizca de bicarbonato): de verde-azul a morado. El cambio con repollo es más leve.</p>
+      <p class="foot">With bromothymol blue: from blue to greenish yellow. With red cabbage (plus a pinch of baking soda): from blue-green to purple. The cabbage change is subtler.</p>
     </div>
     <div class="card">
-      <div class="eyebrow" style="color:var(--ink)">Pasos</div>
+      <div class="eyebrow" style="color:var(--ink)">Steps</div>
       <ol class="steps">
-        <li>Pongan el indicador en los dos vasos. Uno es el “testigo”: no se toca.</li>
-        <li>Un voluntario de cada equipo sopla suave con la pajilla dentro del otro vaso.</li>
-        <li>Todos miran: ¿qué equipo hace cambiar el color primero?</li>
+        <li>Add the indicator to both cups. One is the control: nobody touches it.</li>
+        <li>One volunteer from each team gently blows through a straw into the other cup.</li>
+        <li>Everyone watches: which team changes the color first?</li>
       </ol>
       <div class="row" style="margin-top:20px">
-        <button class="btn ghost" data-act="exptimer">${S.expTimer ? 'Pausar' : 'Cronómetro 60 s'}</button>
+        <button class="btn ghost" data-act="exptimer">${S.expTimer ? 'Pause' : '60 s timer'}</button>
         <span class="timer ${S.expLeft <= 10 ? 'low' : ''}" aria-live="polite">${S.expLeft}</span>
       </div>
     </div>
   </div>
-  ${step >= 1 ? `<div class="explain" style="font-size:22px"><b>¿Qué pasó?</b> Al soplar metemos CO₂ en el agua. El CO₂ se disuelve y forma ácido carbónico: <b>CO₂ + H₂O ⇌ H₂CO₃ ⇌ H⁺ + HCO₃⁻</b>. El agua se vuelve más ácida y el indicador cambia de color.<br><br>
-  <b>Eso mismo pasa dentro del Smoke Killer</b>: el humo de la calle llena el agua de CO₂. Las microalgas se lo comen con la fotosíntesis y el agua vuelve a su color. Si trajeron el vaso con la planta, compárenlo: la planta “limpió” el CO₂.</div>` : ''}
-  ${step >= 1 ? `<div class="award"><span class="tag">Equipo más rápido (+1)</span>${S.teams.map((t, i) => `<button class="tbtn" data-expaward="${i}" aria-pressed="${S.awarded.exp === i}"><span class="sw" style="background:${TEAM_COLORS[i]}"></span>${esc(t.name)}</button>`).join('')}</div>` : ''}
+  ${step >= 1 ? `<div class="explain" style="font-size:22px"><b>What happened?</b> Blowing puts CO₂ into the water. CO₂ dissolves and forms carbonic acid: <b>CO₂ + H₂O ⇌ H₂CO₃ ⇌ H⁺ + HCO₃⁻</b>. The water becomes more acidic and the indicator changes color.<br><br>
+  <b>The same thing happens inside Smoke Killer</b>: street smoke loads the water with CO₂. The microalgae eat it through photosynthesis and the water returns to its color. If you brought the cup with the plant, compare: the plant “cleaned” the CO₂.</div>` : ''}
+  ${step >= 1 ? `<div class="award"><span class="tag">Fastest team (+1)</span>${S.teams.map((t, i) => `<button class="tbtn" data-expaward="${i}" aria-pressed="${S.awarded.exp === i}"><span class="sw" style="background:${TEAM_COLORS[i]}"></span>${esc(t.name)}</button>`).join('')}</div>` : ''}
   <div class="row" style="margin-top:28px">
-    ${step === 0 ? `<button class="btn green" data-act="expexplain">Mostrar explicación</button>` : `<button class="btn green" data-go="final">Ir al compromiso →</button>`}
+    ${step === 0 ? `<button class="btn green" data-act="expexplain">Show explanation</button>` : `<button class="btn green" data-go="final">Go to the pledge →</button>`}
   </div>`;
 }
 
 function vFinal() {
   const max = Math.max(1, ...S.pledges);
-  return `<div class="eyebrow">Cierre · Mi compromiso por el aire</div>
-  <h2>El Smoke Killer ayuda. Nosotros también podemos.</h2>
-  <p class="lead">Cada persona elige <b>una</b> acción que va a hacer esta semana. Contemos las manos.</p>
+  return `<div class="eyebrow">Closing · My pledge for clean air</div>
+  <h2>Smoke Killer helps. So can we.</h2>
+  <p class="lead">Everyone picks <b>one</b> action to take this week. Let’s count hands.</p>
   <div class="pledges">
     ${PLEDGES.map((p, i) => `<div class="pl"><span class="name">${p}</span><div class="bar"><span style="width:${(S.pledges[i] / max) * 100}%"></span></div>
-    <div class="ctr"><button class="sq" data-pl="${i}" data-d="-1" aria-label="Restar en ${esc(p)}">−</button><b>${S.pledges[i]}</b><button class="sq" data-pl="${i}" data-d="1" aria-label="Sumar en ${esc(p)}">+</button></div></div>`).join('')}
+    <div class="ctr"><button class="sq" data-pl="${i}" data-d="-1" aria-label="Subtract from ${esc(p)}">−</button><b>${S.pledges[i]}</b><button class="sq" data-pl="${i}" data-d="1" aria-label="Add to ${esc(p)}">+</button></div></div>`).join('')}
   </div>
-  <h2 style="margin-top:44px">Equipo ganador</h2>
+  <h2 style="margin-top:44px">Winning team</h2>
   ${podium()}
-  <p class="lead" style="margin-top:28px">Gracias por respirar con nosotros. <b style="color:var(--green-d)">Menos humo, más oxígeno.</b></p>`;
+  <p class="lead" style="margin-top:28px">Thanks for breathing with us. <b style="color:var(--green-d)">Less smoke, more oxygen.</b></p>`;
 }
 
 function podium() {
   const sorted = S.teams.map((t, i) => ({ ...t, i })).sort((a, b) => b.pts - a.pts);
   const top = sorted[0].pts;
-  return `<div class="podium">${sorted.map(t => `<div class="pod ${t.pts === top && top > 0 ? 'win' : ''}"><div style="display:flex;align-items:center;gap:10px;font-weight:700;font-size:20px"><span class="sw" style="background:${TEAM_COLORS[t.i]}"></span>${esc(t.name)}</div><div class="p">${t.pts}</div><div class="kbd">puntos</div></div>`).join('')}</div>`;
+  return `<div class="podium">${sorted.map(t => `<div class="pod ${t.pts === top && top > 0 ? 'win' : ''}"><div style="display:flex;align-items:center;gap:10px;font-weight:700;font-size:20px"><span class="sw" style="background:${TEAM_COLORS[t.i]}"></span>${esc(t.name)}</div><div class="p">${t.pts}</div><div class="kbd">points</div></div>`).join('')}</div>`;
 }
 
 function render() {
@@ -313,7 +313,7 @@ document.addEventListener('click', (e) => {
   }
   if (b.dataset.pl !== undefined) { const i = +b.dataset.pl; S.pledges[i] = Math.max(0, S.pledges[i] + +b.dataset.d); return render(); }
   const a = b.dataset.act;
-  if (a === 'addTeam' && S.teams.length < 4) { S.teams.push({ name: ['Equipo Verde', 'Equipo Azul', 'Equipo Amarillo', 'Equipo Morado'][S.teams.length], pts: 0 }); }
+  if (a === 'addTeam' && S.teams.length < 4) { S.teams.push({ name: ['Green Team', 'Blue Team', 'Yellow Team', 'Purple Team'][S.teams.length], pts: 0 }); }
   if (a === 'rmTeam' && S.teams.length > 2) { S.teams.pop(); }
   if (a === 'handUp') S.hands[S.r1]++;
   if (a === 'handDown') S.hands[S.r1] = Math.max(0, S.hands[S.r1] - 1);
@@ -336,7 +336,7 @@ document.addEventListener('click', (e) => {
 
 document.addEventListener('input', (e) => {
   const i = e.target.dataset.team; if (i === undefined) return;
-  S.teams[+i].name = e.target.value || `Equipo ${+i + 1}`;
+  S.teams[+i].name = e.target.value || `Team ${+i + 1}`;
   renderNav();
 });
 
