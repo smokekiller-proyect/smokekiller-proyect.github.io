@@ -284,19 +284,11 @@ const QS = [
     e: 'Trick question! Light splits water molecules: 2 H₂O → O₂ + 4 H⁺ + 4 e⁻. The oxygen comes from water, not from CO₂.' },
   { q: 'Which part of Smoke Killer traps the soot and dust in smoke?', o: ['The microalgae', 'The filter', 'The solar panel', 'The tank'], a: 1,
     e: 'The algae eat CO₂, but not soot. That is why the air first goes through a filter that traps the particles.' },
-  { q: 'How small is a PM2.5 particle compared with the width of a human hair?', o: ['The same size', 'Half as wide', 'About 30 times smaller', 'Bigger than a hair'], a: 2,
-    e: 'A hair is about 70 micrometers wide; PM2.5 is 2.5 or less. They are small enough to reach deep into the lungs.',
-    s: 'Source: U.S. Environmental Protection Agency (EPA)' },
-  { q: 'According to the WHO, what share of the world population breathes air that exceeds its quality limits?', o: ['25%', '50%', '75%', '99%'], a: 3,
-    e: 'Almost everyone: 99% of people breathe air that exceeds the limits recommended by the WHO.',
-    s: 'Source: World Health Organization, 2022' },
   { q: 'How many deaths per year does the WHO link to air pollution?', o: ['70 thousand', '700 thousand', '7 million', '70 million'], a: 2,
     e: 'The WHO estimates about 7 million premature deaths a year from polluted air, outdoors and inside homes.',
     s: 'Source: World Health Organization' },
   { q: 'What happens to the algae harvested from Smoke Killer?', o: ['Thrown in the trash', 'Fertilizer or biogas', 'Burned', 'Released into the street'], a: 1,
     e: 'The algae biomass becomes plant fertilizer or is used to make biogas. Nothing goes to waste.' },
-  { q: 'For every 1 kg of CO₂ the algae fix, roughly how much oxygen do they release?', o: ['None', 'About 0.73 kg', 'About 5 kg', 'About 100 kg'], a: 1,
-    e: 'From the photosynthesis equation (6 CO₂ + 6 H₂O → C₆H₁₂O₆ + 6 O₂): 6 × 32 g of O₂ for every 6 × 44 g of CO₂ ≈ 0.73.' },
 ];
 
 const PLEDGES = ['Walk, bike or take the bus when I can', 'Never burn trash or leaves', 'Plant and care for a tree', 'Turn off the engine when the car is parked', 'Share rides with others', 'Tell my family what I learned today'];
@@ -321,7 +313,7 @@ function vPlay() {
     <div>
       <div class="eyebrow">Smoke Killer Challenge · ${QS.length} questions</div>
       <h1>How clean is the air <b>you breathe?</b></h1>
-      <p class="lead">Write your name, answer 4 quick questions about your day and 8 trivia questions, and see your result on the big screen.</p>
+      <p class="lead">Write your name, answer 4 quick questions about your day and 5 trivia questions, and see your result on the big screen.</p>
       <form class="join" data-form="join">
         <label for="pname">Your name<input id="pname" maxlength="20" autocomplete="nickname" value="${esc(P.draft)}" placeholder="Type your name"></label>
         <button class="btn green" type="submit">Start playing →</button>
@@ -369,7 +361,7 @@ function vPlay() {
       <div class="row" style="margin-top:22px"><button class="btn green" data-act="pnext">${P.i === QS.length - 1 ? 'See my result →' : 'Next question →'}</button></div>` : ''}`;
   }
   const s = P.score, t = QS.length;
-  const msg = s >= 7 ? 'Clean-air expert!' : s >= 4 ? 'Great job, you are learning fast!' : 'Every breath counts. Keep learning!';
+  const msg = s === t ? 'Clean-air expert!' : s >= 3 ? 'Great job, you are learning fast!' : 'Every breath counts. Keep learning!';
   return `<div class="eyebrow">Your result</div>
   <h2>Well done, ${esc(P.name)}!</h2>
   <div class="score-big" style="margin-top:12px">${s}<small> / ${t}</small></div>
