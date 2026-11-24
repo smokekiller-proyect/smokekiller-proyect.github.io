@@ -85,18 +85,123 @@ h2{font-family:'Space Grotesk',sans-serif;font-size:clamp(32px,4vw,54px);line-he
 .foot{margin-top:24px;font-size:14px;color:var(--muted)}
 .hidden{display:none !important}
 .kbd{font-size:14px;color:var(--muted)}
+
+/* ===== decorations ===== */
+.app{position:relative;z-index:2}
+main{padding-bottom:200px}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:32px;align-items:center}
+.hero-fig{margin:0;border-radius:24px;overflow:hidden;box-shadow:0 18px 40px rgba(22,33,28,.18);position:relative;animation:heroFloat 6s ease-in-out infinite}
+.hero-fig img{display:block;width:100%;height:auto}
+.hero-fig figcaption{position:absolute;left:14px;bottom:12px;padding:6px 12px;border-radius:999px;background:rgba(22,33,28,.8);color:#fff;font-size:14px;font-weight:600}
+@keyframes heroFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@media (max-width:860px){.hero-grid{grid-template-columns:1fr}}
+.brand-leaf{display:inline-block;width:22px;height:22px;vertical-align:-3px;margin-right:6px;animation:leafSpin 5s ease-in-out infinite;transform-origin:50% 90%}
+@keyframes leafSpin{0%,100%{transform:rotate(-12deg)}50%{transform:rotate(14deg)}}
+button.brand{cursor:pointer;background:none;border:none;color:#fff;padding:6px 4px;min-height:44px}
+.floaters{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.fl{position:absolute;bottom:-60px;opacity:.28;animation:floatUp var(--t,24s) linear var(--d,0s) infinite}
+.fl svg{display:block;animation:sway 4s ease-in-out infinite}
+@keyframes floatUp{0%{transform:translateY(0)}100%{transform:translateY(calc(-100vh - 120px))}}
+@keyframes sway{0%,100%{transform:translateX(-14px) rotate(-12deg)}50%{transform:translateX(14px) rotate(12deg)}}
+.scene{position:fixed;left:0;right:0;bottom:0;height:150px;z-index:3;pointer-events:none;overflow:hidden}
+.scene .sky-line{position:absolute;left:0;right:0;bottom:22px;width:100%;height:110px}
+.scene .ground{position:absolute;left:0;right:0;bottom:0;height:26px;background:linear-gradient(#7CC46A,#5FA851)}
+.scene .road{position:absolute;left:0;right:0;bottom:0;height:9px;background:#4A5157}
+.tree{position:absolute;bottom:20px;transform-origin:50% 100%;animation:treeSway 5s ease-in-out infinite}
+@keyframes treeSway{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
+.skb{position:absolute;bottom:20px;left:70%;width:130px;height:150px}
+.fan{transform-box:fill-box;transform-origin:center;animation:spin 1.2s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.tube{fill:#3FB37F;animation:glow 2.4s ease-in-out infinite}
+@keyframes glow{0%,100%{fill:#3FB37F}50%{fill:#5FE09A}}
+.o2b{position:absolute;left:98px;top:0;width:12px;height:12px;border-radius:50%;background:rgba(127,212,255,.75);border:1.5px solid #2B7BD6;opacity:0;animation:o2up 3.6s ease-out var(--d,0s) infinite}
+.o2b.t{width:auto;height:auto;padding:1px 5px;border-radius:9px;font:700 11px Inter,sans-serif;color:#1D5FAE;background:rgba(255,255,255,.9)}
+@keyframes o2up{0%{transform:translate(0,0) scale(.4);opacity:0}15%{opacity:1}100%{transform:translate(var(--x,20px),-70px) scale(1.1);opacity:0}}
+.puff{position:absolute;bottom:28px;left:var(--x);width:26px;height:26px;border-radius:50%;background:#8D9399;opacity:0;filter:blur(1px);animation:suck 7s ease-in var(--d,0s) infinite}
+@keyframes suck{0%{transform:translate(0,0) scale(.6);opacity:0}12%{opacity:.75}70%{opacity:.6}100%{transform:translate(calc(70vw + 14px - var(--x)),-90px) scale(.1);opacity:0}}
+.runner{position:absolute;bottom:20px;left:0;transform:translateX(-160px);animation:run var(--t,12s) linear var(--d,0s) infinite;will-change:transform}
+.runner.rtl{animation-name:runBack}
+.runner.rtl > svg{transform:scaleX(-1)}
+@keyframes run{0%{transform:translateX(-160px)}45%{transform:translateX(calc(100vw + 40px))}100%{transform:translateX(calc(100vw + 40px))}}
+@keyframes runBack{0%{transform:translateX(calc(100vw + 40px))}45%{transform:translateX(-160px)}100%{transform:translateX(-160px)}}
+.bob{animation:bob .32s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+.hop{animation:hop .55s ease-in-out infinite}
+@keyframes hop{0%,100%{transform:translateY(0)}50%{transform:translateY(-16px)}}
+.leg{transform-box:fill-box;transform-origin:50% 0;animation:legA .32s ease-in-out infinite}
+.leg.b{animation-name:legB}
+@keyframes legA{0%,100%{transform:rotate(28deg)}50%{transform:rotate(-28deg)}}
+@keyframes legB{0%,100%{transform:rotate(-28deg)}50%{transform:rotate(28deg)}}
+.flyer{position:absolute;top:8px;left:0;transform:translateX(-160px);animation:run var(--t,16s) linear var(--d,0s) infinite}
+.wing{transform-box:fill-box;transform-origin:50% 100%;animation:flap .3s ease-in-out infinite}
+@keyframes flap{0%,100%{transform:scaleY(1)}50%{transform:scaleY(-.6)}}
+.exh{position:absolute;right:-14px;bottom:6px;width:12px;height:12px;border-radius:50%;background:#9AA0A6;animation:exh .9s ease-out infinite}
+.exh.b{animation-delay:.45s}
+@keyframes exh{0%{transform:translate(0,0) scale(.5);opacity:.8}100%{transform:translate(26px,-18px) scale(1.6);opacity:0}}
+.fx{position:fixed;inset:0;z-index:6;pointer-events:none;overflow:hidden}
+.smog{position:absolute;width:90px;height:90px;border-radius:50%;background:radial-gradient(circle at 40% 40%,#9CA2A8,#6E747A);filter:blur(2px);opacity:0}
+.smog .lbl{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:700 18px Inter,sans-serif;color:#fff}
+.sk-hero{position:absolute;width:240px}
+.sk-hero svg{display:block;width:100%;height:auto}
+@media (max-width:640px){.sk-hero{width:160px}.say{left:auto;right:0;top:-48px;font-size:14px}.scene{height:120px}.skb{transform:scale(.8);transform-origin:bottom left}}
+.sk-hero .fan{animation-duration:.5s}
+.sk-hero .tube{animation-duration:1s}
+.say{position:absolute;left:-170px;top:-6px;padding:10px 16px;border-radius:18px 18px 4px 18px;background:#16211C;color:#fff;font:700 17px Inter,sans-serif;white-space:nowrap;box-shadow:0 6px 18px rgba(0,0,0,.2)}
+.say b{color:#4FE08F}
+.bub{position:absolute;border-radius:50%;background:rgba(127,212,255,.7);border:2px solid #2B7BD6}
+.bub.o2{width:auto;height:auto;padding:3px 9px;border-radius:14px;background:#fff;color:#1D5FAE;font:700 16px Inter,sans-serif}
+.cf{position:absolute;top:-40px}
+@media (prefers-reduced-motion: reduce){.floaters,.fx{display:none}.scene *,.hero-fig,.brand-leaf{animation:none !important}}
+
 @media (max-width:640px){.opts{grid-template-columns:1fr}.pl{grid-template-columns:1fr}main{padding:28px 18px}}
 </style>
 </head>
 <body>
+<div class="floaters" aria-hidden="true"><span class="fl" style="left:4%;--t:22s;--d:0s"><svg width="26" height="26" viewBox="0 0 24 24"><path d="M4 20c0-9 6-15 16-16-1 10-7 16-16 16z" fill="#4FE08F"/><path d="M4 20 14 10" stroke="#1F6B3E" stroke-width="1.2"/></svg></span><span class="fl" style="left:12%;--t:26s;--d:-6s"><svg width="22" height="22" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="rgba(127,212,255,.5)" stroke="#2B7BD6" stroke-width="1.5"/><circle cx="8" cy="8" r="2.5" fill="#fff"/></svg></span><span class="fl" style="left:21%;--t:30s;--d:-12s"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M4 20c0-9 6-15 16-16-1 10-7 16-16 16z" fill="#2F9E5B"/><path d="M4 20 14 10" stroke="#1F6B3E" stroke-width="1.2"/></svg></span><span class="fl" style="left:30%;--t:28s;--d:-3s"><svg width="34" height="20" viewBox="0 0 40 24"><circle cx="8" cy="12" r="6" fill="#E25B4F"/><circle cx="20" cy="12" r="7" fill="#3A3F44"/><circle cx="32" cy="12" r="6" fill="#E25B4F"/></svg></span><span class="fl" style="left:38%;--t:20s;--d:-15s"><svg width="16" height="16" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="rgba(127,212,255,.5)" stroke="#2B7BD6" stroke-width="1.5"/><circle cx="8" cy="8" r="2.5" fill="#fff"/></svg></span><span class="fl" style="left:47%;--t:26s;--d:-9s"><svg width="24" height="24" viewBox="0 0 24 24"><path d="M4 20c0-9 6-15 16-16-1 10-7 16-16 16z" fill="#7DBA3A"/><path d="M4 20 14 10" stroke="#1F6B3E" stroke-width="1.2"/></svg></span><span class="fl" style="left:55%;--t:24s;--d:-2s"><svg width="26" height="26" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="rgba(127,212,255,.5)" stroke="#2B7BD6" stroke-width="1.5"/><circle cx="8" cy="8" r="2.5" fill="#fff"/></svg></span><span class="fl" style="left:63%;--t:32s;--d:-18s"><svg width="18" height="18" viewBox="0 0 24 24"><path d="M4 20c0-9 6-15 16-16-1 10-7 16-16 16z" fill="#4FE08F"/><path d="M4 20 14 10" stroke="#1F6B3E" stroke-width="1.2"/></svg></span><span class="fl" style="left:71%;--t:30s;--d:-22s"><svg width="30" height="18" viewBox="0 0 40 24"><circle cx="8" cy="12" r="6" fill="#E25B4F"/><circle cx="20" cy="12" r="7" fill="#3A3F44"/><circle cx="32" cy="12" r="6" fill="#E25B4F"/></svg></span><span class="fl" style="left:79%;--t:22s;--d:-10s"><svg width="20" height="20" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="rgba(127,212,255,.5)" stroke="#2B7BD6" stroke-width="1.5"/><circle cx="8" cy="8" r="2.5" fill="#fff"/></svg></span><span class="fl" style="left:87%;--t:27s;--d:-5s"><svg width="28" height="28" viewBox="0 0 24 24"><path d="M4 20c0-9 6-15 16-16-1 10-7 16-16 16z" fill="#2F9E5B"/><path d="M4 20 14 10" stroke="#1F6B3E" stroke-width="1.2"/></svg></span><span class="fl" style="left:94%;--t:25s;--d:-14s"><svg width="14" height="14" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="rgba(127,212,255,.5)" stroke="#2B7BD6" stroke-width="1.5"/><circle cx="8" cy="8" r="2.5" fill="#fff"/></svg></span></div>
 <div class="app">
 <header>
-  <div class="brand">SMOKE <b>KILLER</b> CHALLENGE</div>
+  <button class="brand" data-act="surprise" aria-label="Smoke Killer Challenge: play the cleaning animation"><svg class="brand-leaf" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20c0-9 6-15 16-16-1 10-7 16-16 16z" fill="#4FE08F"/><path d="M4 20 14 10" stroke="#16211C" stroke-width="1.6"/></svg>SMOKE <b>KILLER</b> CHALLENGE</button>
   <nav id="nav" aria-label="Sections"></nav>
   <div class="score-strip" id="strip" aria-label="Score"></div>
 </header>
 <main id="main"></main>
 </div>
+<div class="scene" aria-hidden="true"><svg class="sky-line" viewBox="0 0 1600 110" preserveAspectRatio="xMidYMax slice"><g fill="#D3DED7">
+<rect x="0" y="50" width="70" height="60"/><rect x="80" y="20" width="60" height="90"/><rect x="150" y="60" width="90" height="50"/><rect x="250" y="30" width="50" height="80"/>
+<rect x="310" y="55" width="80" height="55"/><rect x="400" y="10" width="55" height="100"/><rect x="470" y="45" width="100" height="65"/><rect x="585" y="25" width="60" height="85"/>
+<rect x="660" y="60" width="70" height="50"/><rect x="745" y="35" width="55" height="75"/><rect x="820" y="55" width="90" height="55"/><rect x="925" y="15" width="60" height="95"/>
+<rect x="1000" y="50" width="80" height="60"/><rect x="1095" y="30" width="55" height="80"/><rect x="1165" y="58" width="95" height="52"/><rect x="1275" y="22" width="60" height="88"/>
+<rect x="1350" y="48" width="80" height="62"/><rect x="1445" y="30" width="60" height="80"/><rect x="1520" y="55" width="80" height="55"/></g>
+<g fill="#C3D0C8"><rect x="430" y="0" width="10" height="20"/><rect x="955" y="0" width="8" height="18"/></g></svg><svg class="tree" style="left:3%;animation-delay:0s" width="44" height="64" viewBox="0 0 44 64"><rect x="19" y="38" width="6" height="26" fill="#7A5A3C"/><circle cx="22" cy="26" r="18" fill="#4F8F4A"/><circle cx="13" cy="32" r="10" fill="#4F8F4A"/><circle cx="31" cy="32" r="10" fill="#4F8F4A"/></svg><svg class="tree" style="left:17%;animation-delay:1.2s" width="44" height="64" viewBox="0 0 44 64"><rect x="19" y="38" width="6" height="26" fill="#7A5A3C"/><circle cx="22" cy="26" r="18" fill="#5DA055"/><circle cx="13" cy="32" r="10" fill="#5DA055"/><circle cx="31" cy="32" r="10" fill="#5DA055"/></svg><svg class="tree" style="left:36%;animation-delay:0.6s" width="44" height="64" viewBox="0 0 44 64"><rect x="19" y="38" width="6" height="26" fill="#7A5A3C"/><circle cx="22" cy="26" r="18" fill="#4F8F4A"/><circle cx="13" cy="32" r="10" fill="#4F8F4A"/><circle cx="31" cy="32" r="10" fill="#4F8F4A"/></svg><svg class="tree" style="left:52%;animation-delay:1.8s" width="44" height="64" viewBox="0 0 44 64"><rect x="19" y="38" width="6" height="26" fill="#7A5A3C"/><circle cx="22" cy="26" r="18" fill="#5DA055"/><circle cx="13" cy="32" r="10" fill="#5DA055"/><circle cx="31" cy="32" r="10" fill="#5DA055"/></svg><svg class="tree" style="left:88%;animation-delay:0.9s" width="44" height="64" viewBox="0 0 44 64"><rect x="19" y="38" width="6" height="26" fill="#7A5A3C"/><circle cx="22" cy="26" r="18" fill="#4F8F4A"/><circle cx="13" cy="32" r="10" fill="#4F8F4A"/><circle cx="31" cy="32" r="10" fill="#4F8F4A"/></svg><svg class="tree" style="left:96%;animation-delay:2.2s" width="44" height="64" viewBox="0 0 44 64"><rect x="19" y="38" width="6" height="26" fill="#7A5A3C"/><circle cx="22" cy="26" r="18" fill="#5DA055"/><circle cx="13" cy="32" r="10" fill="#5DA055"/><circle cx="31" cy="32" r="10" fill="#5DA055"/></svg><div class="ground"></div><div class="road"></div><div class="skb"><svg width="130" height="150" viewBox="0 0 130 150">
+<rect x="22" y="62" width="86" height="88" fill="#8FA2B0"/>
+<g fill="#D7E7F2"><rect x="32" y="74" width="14" height="12"/><rect x="58" y="74" width="14" height="12"/><rect x="84" y="74" width="14" height="12"/><rect x="32" y="96" width="14" height="12"/><rect x="58" y="96" width="14" height="12"/><rect x="84" y="96" width="14" height="12"/><rect x="32" y="118" width="14" height="12"/><rect x="84" y="118" width="14" height="12"/></g>
+<rect x="56" y="124" width="18" height="26" fill="#3E4A54"/>
+<rect x="28" y="50" width="74" height="12" rx="2" fill="#2C353D"/>
+<rect x="10" y="30" width="20" height="26" rx="3" fill="#3E4A54"/><g class="fan"><circle cx="20" cy="43" r="8" fill="#9AA6B0"/><path d="M20 35v16M12 43h16" stroke="#3E4A54" stroke-width="2.4"/></g>
+<rect class="tube" x="36" y="18" width="11" height="32" rx="5.5"/><rect class="tube" x="51" y="18" width="11" height="32" rx="5.5" style="animation-delay:.3s"/><rect class="tube" x="66" y="18" width="11" height="32" rx="5.5" style="animation-delay:.6s"/><rect class="tube" x="81" y="18" width="11" height="32" rx="5.5" style="animation-delay:.9s"/>
+<rect x="34" y="13" width="60" height="5" rx="2" fill="#3E4A54"/><rect x="96" y="6" width="6" height="44" fill="#3FCF9A"/><rect x="93" y="3" width="12" height="4" rx="2" fill="#3FCF9A"/>
+</svg>
+<span class="o2b" style="--d:0s;--x:16px"></span><span class="o2b" style="--d:.9s;--x:-10px"></span><span class="o2b t" style="--d:1.8s;--x:24px">O₂</span><span class="o2b" style="--d:2.7s;--x:4px"></span></div><span class="puff" style="--x:6vw;--d:0s"></span><span class="puff" style="--x:12vw;--d:1.2s"></span><span class="puff" style="--x:20vw;--d:2.4s"></span><span class="puff" style="--x:28vw;--d:3.6s"></span><span class="puff" style="--x:9vw;--d:4.8s"></span><span class="puff" style="--x:24vw;--d:6s"></span><div class="runner rtl" style="--t:16s;--d:7s;bottom:4px"><span class="exh"></span><span class="exh b"></span><svg width="70" height="30" viewBox="0 0 70 30"><rect x="2" y="10" width="66" height="13" rx="5" fill="#D6453F"/><rect x="16" y="2" width="36" height="12" rx="4" fill="#D6453F"/><rect x="21" y="5" width="12" height="7" rx="1" fill="#BFD6E6"/><rect x="36" y="5" width="12" height="7" rx="1" fill="#BFD6E6"/><circle cx="17" cy="24" r="5" fill="#16211C"/><circle cx="53" cy="24" r="5" fill="#16211C"/></svg></div><div class="runner" style="--t:13s;--d:2s"><svg width="92" height="62" viewBox="0 0 92 62"><g class="bob">
+<path d="M14 26c-8-6-10-14-6-18" stroke="#7A4A22" stroke-width="5" fill="none" stroke-linecap="round"/>
+<rect class="leg" x="24" y="34" width="6" height="18" rx="3" fill="#7A4A22"/><rect class="leg b" x="33" y="34" width="6" height="18" rx="3" fill="#6A3E1C"/>
+<rect class="leg b" x="54" y="34" width="6" height="18" rx="3" fill="#7A4A22"/><rect class="leg" x="62" y="34" width="6" height="18" rx="3" fill="#6A3E1C"/>
+<ellipse cx="45" cy="30" rx="28" ry="12" fill="#9C6430"/><circle cx="74" cy="18" r="11" fill="#9C6430"/><ellipse cx="85" cy="21" rx="7" ry="5" fill="#B7834F"/>
+<path d="M68 9c-5 2-6 10-2 14" fill="#5A3416"/><circle cx="77" cy="15" r="1.8" fill="#16211C"/><circle cx="91" cy="20" r="2.2" fill="#16211C"/></g></svg></div><div class="runner rtl" style="--t:15s;--d:9s"><svg width="70" height="64" viewBox="0 0 70 64"><g class="hop">
+<ellipse cx="30" cy="44" rx="19" ry="13" fill="#E9E4DC"/><circle cx="11" cy="42" r="5" fill="#fff"/>
+<circle cx="50" cy="33" r="10" fill="#E9E4DC"/><ellipse cx="46" cy="14" rx="3.6" ry="12" fill="#E9E4DC" transform="rotate(-12 46 14)"/><ellipse cx="54" cy="14" rx="3.6" ry="12" fill="#E9E4DC" transform="rotate(10 54 14)"/>
+<ellipse cx="46" cy="14" rx="1.6" ry="8" fill="#F2B7C0" transform="rotate(-12 46 14)"/><circle cx="54" cy="31" r="1.6" fill="#16211C"/><circle cx="60" cy="35" r="1.6" fill="#E57A8A"/>
+<ellipse cx="40" cy="56" rx="9" ry="4" fill="#DDD6CA"/></g></svg></div><div class="runner" style="--t:12s;--d:14s"><svg width="80" height="58" viewBox="0 0 80 58"><g class="bob">
+<path d="M12 28c-6-10-4-22 2-24" stroke="#D9822B" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+<rect class="leg" x="20" y="32" width="5" height="16" rx="2.5" fill="#D9822B"/><rect class="leg b" x="28" y="32" width="5" height="16" rx="2.5" fill="#C0701F"/>
+<rect class="leg b" x="46" y="32" width="5" height="16" rx="2.5" fill="#D9822B"/><rect class="leg" x="53" y="32" width="5" height="16" rx="2.5" fill="#C0701F"/>
+<ellipse cx="38" cy="28" rx="23" ry="10" fill="#EE9A3E"/><circle cx="63" cy="20" r="10" fill="#EE9A3E"/>
+<path d="M56 13l2-10 6 7zM66 11l5-8 2 10z" fill="#D9822B"/><circle cx="66" cy="18" r="1.6" fill="#16211C"/><path d="M70 23h8M70 25l7 3" stroke="#16211C" stroke-width=".8"/></g></svg></div><div class="flyer" style="--t:18s;--d:4s"><svg width="54" height="34" viewBox="0 0 54 34">
+<path class="wing" d="M24 16 10 4l18 8z" fill="#2B7BD6"/><ellipse cx="28" cy="18" rx="14" ry="7" fill="#3D8FE8"/><circle cx="41" cy="14" r="6" fill="#3D8FE8"/>
+<path d="M46 14l7 2-7 2z" fill="#F0A33B"/><circle cx="43" cy="12.5" r="1.3" fill="#16211C"/><path d="M14 18 3 14l3 8z" fill="#2B7BD6"/>
+<path class="wing" d="M26 16 34 2l-2 14z" fill="#2B7BD6"/></svg></div><div class="flyer" style="--t:22s;--d:12s;top:30px"><svg width="54" height="34" viewBox="0 0 54 34">
+<path class="wing" d="M24 16 10 4l18 8z" fill="#2B7BD6"/><ellipse cx="28" cy="18" rx="14" ry="7" fill="#3D8FE8"/><circle cx="41" cy="14" r="6" fill="#3D8FE8"/>
+<path d="M46 14l7 2-7 2z" fill="#F0A33B"/><circle cx="43" cy="12.5" r="1.3" fill="#16211C"/><path d="M14 18 3 14l3 8z" fill="#2B7BD6"/>
+<path class="wing" d="M26 16 34 2l-2 14z" fill="#2B7BD6"/></svg></div></div><div class="fx" id="fx" aria-hidden="true"></div>
 
 <script>
 const TEAM_COLORS = ['#2F9E5B', '#2B7BD6', '#E0A23A', '#B5468C'];
@@ -106,10 +211,9 @@ const S = {
   r1: 0, hands: [0, 0, 0, 0],
   q: 0, revealed: false, awarded: {},
   timer: null, left: 20,
-  exp: 0, expTimer: null, expLeft: 60,
   pledges: [0, 0, 0, 0, 0, 0],
 };
-const VIEWS = [['inicio', 'Start'], ['r1', '1 · What about you?'], ['r2', '2 · Trivia'], ['r3', '3 · Experiment'], ['final', 'Pledge & winner']];
+const VIEWS = [['inicio', 'Start'], ['r1', '1 · What about you?'], ['r2', '2 · Trivia'], ['final', 'Pledge & winner']];
 
 const R1 = [
   'Raise your hand if you have ever coughed because of smoke from a bus or a car.',
@@ -145,8 +249,8 @@ const PLEDGES = ['Walk, bike or take the bus when I can', 'Never burn trash or l
 const $ = (s, r = document) => r.querySelector(s);
 const esc = (t) => String(t).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
-function go(v) { stopTimers(); S.view = v; render(); window.scrollTo(0, 0); }
-function stopTimers() { clearInterval(S.timer); S.timer = null; clearInterval(S.expTimer); S.expTimer = null; }
+function go(v) { stopTimers(); S.view = v; render(); window.scrollTo(0, 0); if (v === 'final') setTimeout(() => leafConfetti(60), 300); else if (v === 'r1' || v === 'r2') setTimeout(surprise, 600); }
+function stopTimers() { clearInterval(S.timer); S.timer = null; }
 
 function renderNav() {
   $('#nav').innerHTML = VIEWS.map(([k, l]) => `<button data-go="${k}" ${S.view === k ? 'aria-current="step"' : ''}>${l}</button>`).join('');
@@ -155,9 +259,14 @@ function renderNav() {
 
 function vInicio() {
   return `
-  <div class="eyebrow">Audience activity · 12 minutes</div>
-  <h1>How clean is the air <b>you breathe?</b></h1>
-  <p class="lead">Form teams. We will play, guess and run a live experiment to understand how Smoke Killer works and why it matters to all of us.</p>
+  <div class="hero-grid">
+    <div>
+      <div class="eyebrow">Audience activity · 10 minutes</div>
+      <h1>How clean is the air <b>you breathe?</b></h1>
+      <p class="lead">Form teams. We will play and guess together to understand how Smoke Killer works and why it matters to all of us.</p>
+    </div>
+    <figure class="hero-fig"><img src="media/rooftop-city.jpg" alt="3D render of the Smoke Killer unit on a city rooftop, pulling in street smoke and releasing oxygen"><figcaption>Smoke Killer on a city rooftop</figcaption></figure>
+  </div>
   <div class="teams">
     ${S.teams.map((t, i) => `<label class="team-in"><span class="sw" style="background:${TEAM_COLORS[i]}"></span><span class="hidden">Team ${i + 1} name</span><input data-team="${i}" value="${esc(t.name)}" aria-label="Team ${i + 1} name"></label>`).join('')}
   </div>
@@ -172,7 +281,6 @@ function vInicio() {
       <tr><th>Part</th><th>Time</th><th>What to do</th></tr>
       <tr><td>1 · What about you?</td><td>2 min</td><td>Read each line out loud. Count the raised hands and log them with + / −. Close with the WHO fact.</td></tr>
       <tr><td>2 · Trivia</td><td>5 min</td><td>Each team answers with fingers (1, 2, 3 or 4). Run the timer, reveal the answer and mark the teams that got it right.</td></tr>
-      <tr><td>3 · Experiment</td><td>3 min</td><td>One volunteer per team blows through a straw into the cup with indicator. Everyone watches the color change. Read the explanation.</td></tr>
       <tr><td>Pledge</td><td>2 min</td><td>Everyone picks one action; count hands per option. End by announcing the winning team.</td></tr>
     </table>
     <p class="foot">Shortcut: the ← → arrow keys move back and forward.</p>
@@ -208,7 +316,7 @@ function vR2() {
   if (S.q >= QS.length) {
     return `<div class="eyebrow">Part 2 · Trivia</div><h2>Trivia complete!</h2>
     ${podium()}
-    <div class="row" style="margin-top:28px"><button class="btn ghost" data-act="qprev">← Last question</button><button class="btn green" data-go="r3">Go to the experiment →</button></div>`;
+    <div class="row" style="margin-top:28px"><button class="btn ghost" data-act="qprev">← Last question</button><button class="btn green" data-go="final">Go to the pledge →</button></div>`;
   }
   const Q = QS[S.q];
   const colors = ['#2B7BD6', '#E0A23A', '#B5468C', '#2F9E5B'];
@@ -225,47 +333,6 @@ function vR2() {
   <div class="row" style="margin-top:28px">
     <button class="btn ghost" data-act="qprev" ${S.q === 0 ? 'disabled' : ''}>← Back</button>
     ${S.revealed ? `<button class="btn" data-act="qnext">Next question →</button>` : `<button class="btn ghost" data-act="qtimer">${S.timer ? 'Pause' : '20 s timer'}</button><span class="timer ${S.left <= 5 ? 'low' : ''}" aria-live="polite">${S.left}</span><button class="btn green" data-act="reveal">Reveal answer</button>`}
-  </div>`;
-}
-
-function vR3() {
-  const step = S.exp;
-  return `<div class="eyebrow">Part 3 · Live experiment</div>
-  <h2>The breath test: can you see CO₂?</h2>
-  <div class="grid2" style="margin-top:26px">
-    <div class="card">
-      <div class="eyebrow" style="color:var(--ink)">You need</div>
-      <ul class="mat">
-        <li>2 clear cups of water</li>
-        <li>A pH indicator: bromothymol blue (from the school lab or an aquarium pH test kit), or red cabbage juice</li>
-        <li>Straws, one per volunteer</li>
-        <li>Optional: a cup prepared earlier with a sprig of aquatic plant left in the sun</li>
-      </ul>
-      <div class="colors">
-        <span style="display:flex;align-items:center;gap:10px"><span class="vial" style="background:#3C7FD0"></span>Before</span>
-        <span aria-hidden="true">→</span>
-        <span style="display:flex;align-items:center;gap:10px"><span class="vial" style="background:#E3C93A"></span>After blowing</span>
-      </div>
-      <p class="foot">With bromothymol blue: from blue to greenish yellow. With red cabbage (plus a pinch of baking soda): from blue-green to purple. The cabbage change is subtler.</p>
-    </div>
-    <div class="card">
-      <div class="eyebrow" style="color:var(--ink)">Steps</div>
-      <ol class="steps">
-        <li>Add the indicator to both cups. One is the control: nobody touches it.</li>
-        <li>One volunteer from each team gently blows through a straw into the other cup.</li>
-        <li>Everyone watches: which team changes the color first?</li>
-      </ol>
-      <div class="row" style="margin-top:20px">
-        <button class="btn ghost" data-act="exptimer">${S.expTimer ? 'Pause' : '60 s timer'}</button>
-        <span class="timer ${S.expLeft <= 10 ? 'low' : ''}" aria-live="polite">${S.expLeft}</span>
-      </div>
-    </div>
-  </div>
-  ${step >= 1 ? `<div class="explain" style="font-size:22px"><b>What happened?</b> Blowing puts CO₂ into the water. CO₂ dissolves and forms carbonic acid: <b>CO₂ + H₂O ⇌ H₂CO₃ ⇌ H⁺ + HCO₃⁻</b>. The water becomes more acidic and the indicator changes color.<br><br>
-  <b>The same thing happens inside Smoke Killer</b>: street smoke loads the water with CO₂. The microalgae eat it through photosynthesis and the water returns to its color. If you brought the cup with the plant, compare: the plant “cleaned” the CO₂.</div>` : ''}
-  ${step >= 1 ? `<div class="award"><span class="tag">Fastest team (+1)</span>${S.teams.map((t, i) => `<button class="tbtn" data-expaward="${i}" aria-pressed="${S.awarded.exp === i}"><span class="sw" style="background:${TEAM_COLORS[i]}"></span>${esc(t.name)}</button>`).join('')}</div>` : ''}
-  <div class="row" style="margin-top:28px">
-    ${step === 0 ? `<button class="btn green" data-act="expexplain">Show explanation</button>` : `<button class="btn green" data-go="final">Go to the pledge →</button>`}
   </div>`;
 }
 
@@ -291,7 +358,7 @@ function podium() {
 
 function render() {
   renderNav();
-  const v = { inicio: vInicio, r1: vR1, r2: vR2, r3: vR3, final: vFinal }[S.view];
+  const v = { inicio: vInicio, r1: vR1, r2: vR2, final: vFinal }[S.view];
   $('#main').innerHTML = v();
 }
 
@@ -305,12 +372,6 @@ document.addEventListener('click', (e) => {
   const b = e.target.closest('button'); if (!b) return;
   if (b.dataset.go) return go(b.dataset.go);
   if (b.dataset.award !== undefined) { award(+b.dataset.award, S.q); return render(); }
-  if (b.dataset.expaward !== undefined) {
-    const i = +b.dataset.expaward;
-    if (S.awarded.exp !== undefined) S.teams[S.awarded.exp].pts--;
-    if (S.awarded.exp === i) delete S.awarded.exp; else { S.awarded.exp = i; S.teams[i].pts++; }
-    return render();
-  }
   if (b.dataset.pl !== undefined) { const i = +b.dataset.pl; S.pledges[i] = Math.max(0, S.pledges[i] + +b.dataset.d); return render(); }
   const a = b.dataset.act;
   if (a === 'addTeam' && S.teams.length < 4) { S.teams.push({ name: ['Green Team', 'Blue Team', 'Yellow Team', 'Purple Team'][S.teams.length], pts: 0 }); }
@@ -319,18 +380,14 @@ document.addEventListener('click', (e) => {
   if (a === 'handDown') S.hands[S.r1] = Math.max(0, S.hands[S.r1] - 1);
   if (a === 'r1next') S.r1++;
   if (a === 'r1prev') S.r1 = Math.max(0, S.r1 - 1);
-  if (a === 'reveal') { stopTimers(); S.revealed = true; }
+  if (a === 'surprise') { surprise(); return; }
+  if (a === 'reveal') { stopTimers(); S.revealed = true; setTimeout(() => leafConfetti(28), 50); }
   if (a === 'qnext') { S.q++; S.revealed = false; S.left = 20; }
   if (a === 'qprev') { stopTimers(); S.q = Math.max(0, S.q - 1); S.revealed = S.q < QS.length && !!S.awarded[S.q]; S.left = 20; }
   if (a === 'qtimer') {
     if (S.timer) { clearInterval(S.timer); S.timer = null; }
     else { if (S.left <= 0) S.left = 20; S.timer = setInterval(() => { S.left--; if (S.left <= 0) { S.left = 0; clearInterval(S.timer); S.timer = null; } if (S.view === 'r2' && !S.revealed) render(); }, 1000); }
   }
-  if (a === 'exptimer') {
-    if (S.expTimer) { clearInterval(S.expTimer); S.expTimer = null; }
-    else { if (S.expLeft <= 0) S.expLeft = 60; S.expTimer = setInterval(() => { S.expLeft--; if (S.expLeft <= 0) { S.expLeft = 0; clearInterval(S.expTimer); S.expTimer = null; } if (S.view === 'r3') render(); }, 1000); }
-  }
-  if (a === 'expexplain') S.exp = 1;
   render();
 });
 
@@ -354,6 +411,80 @@ document.addEventListener('keydown', (e) => {
     const k = order.indexOf(S.view); if (k > 0) go(order[k - 1]);
   }
 });
+
+// ===== decorations =====
+const REDUCED = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const FX = document.getElementById('fx');
+const LEAF_SVG = c => `<svg width="26" height="26" viewBox="0 0 24 24"><path d="M4 20c0-9 6-15 16-16-1 10-7 16-16 16z" fill="${c}"/><path d="M4 20 14 10" stroke="#1F6B3E" stroke-width="1.2"/></svg>`;
+const MACHINE_SVG = `<svg width="240" height="230" viewBox="0 0 120 115">
+<rect x="10" y="88" width="100" height="22" rx="4" fill="#2C353D"/>
+<text x="60" y="103" text-anchor="middle" font-family="Inter,sans-serif" font-weight="700" font-size="9" fill="#fff">SMOKE <tspan fill="#4FE08F">KILLER</tspan></text>
+<rect x="0" y="52" width="24" height="36" rx="4" fill="#3E4A54"/><g class="fan"><circle cx="12" cy="70" r="10" fill="#9AA6B0"/><path d="M12 60v20M2 70h20" stroke="#3E4A54" stroke-width="3"/></g>
+<rect class="tube" x="30" y="30" width="14" height="58" rx="7"/><rect class="tube" x="49" y="30" width="14" height="58" rx="7" style="animation-delay:.2s"/><rect class="tube" x="68" y="30" width="14" height="58" rx="7" style="animation-delay:.4s"/>
+<g fill="#fff" opacity=".7"><circle cx="37" cy="70" r="2"/><circle cx="56" cy="56" r="2"/><circle cx="75" cy="64" r="2"/><circle cx="39" cy="46" r="1.5"/><circle cx="73" cy="42" r="1.5"/></g>
+<rect x="27" y="24" width="58" height="7" rx="3" fill="#3E4A54"/><rect x="92" y="10" width="9" height="78" fill="#3FCF9A"/><rect x="88" y="6" width="17" height="6" rx="3" fill="#3FCF9A"/>
+<rect x="104" y="40" width="14" height="30" rx="3" fill="#1D3A6B" transform="rotate(-12 111 55)"/></svg>`;
+let surpriseBusy = false;
+function surprise() {
+  if (REDUCED || surpriseBusy || !FX || !FX.animate) return;
+  surpriseBusy = true;
+  const W = innerWidth, H = innerHeight;
+  const small = W < 640; const mw = small ? 160 : 240; const mx = W - mw - (small ? 10 : 50), my = Math.max(60, H - 150 - (small ? 170 : 245));
+  const smogs = [];
+  for (let i = 0; i < 9; i++) {
+    const d = document.createElement('div'); d.className = 'smog';
+    const x = Math.random() * (W * .6) + 20, y = Math.random() * (H * .45) + 90, sc = .7 + Math.random() * .8;
+    d.style.left = x + 'px'; d.style.top = y + 'px'; d.style.transform = `scale(${sc})`;
+    if (i % 3 === 0) d.innerHTML = '<span class="lbl">CO₂</span>';
+    FX.appendChild(d); smogs.push({ d, x, y, sc });
+    d.animate([{ opacity: 0 }, { opacity: .6 }], { duration: 700, delay: i * 90, fill: 'forwards' });
+  }
+  const m = document.createElement('div'); m.className = 'sk-hero';
+  m.innerHTML = MACHINE_SVG + '<span class="say">Smoke Killer is <b>cleaning the air!</b></span>';
+  m.style.left = mx + 'px'; m.style.top = my + 'px';
+  FX.appendChild(m);
+  m.animate([{ transform: 'translateY(520px) scale(.6)' }, { transform: 'translateY(-20px) scale(1.05)' }, { transform: 'translateY(0) scale(1)' }],
+    { duration: 900, delay: 900, easing: 'cubic-bezier(.2,.9,.3,1.2)', fill: 'both' });
+  m.querySelector('.say').animate([{ opacity: 0, transform: 'scale(.6)' }, { opacity: 1, transform: 'scale(1)' }], { duration: 400, delay: 1700, fill: 'both' });
+  const ix = mx + mw * .1, iy = my + mw * .6;
+  smogs.forEach((s, i) => {
+    s.d.animate([{ transform: `translate(0,0) scale(${s.sc})`, opacity: .6 }, { transform: `translate(${ix - s.x - 45}px, ${iy - s.y - 45}px) scale(.05)`, opacity: .15 }],
+      { duration: 1300, delay: 2100 + i * 160, easing: 'cubic-bezier(.6,0,.9,.6)', fill: 'forwards' });
+  });
+  setTimeout(() => {
+    for (let i = 0; i < 22; i++) {
+      const b = document.createElement('div');
+      const leaf = i % 3 === 2, o2 = i % 4 === 0;
+      if (leaf) { b.style.position = 'absolute'; b.innerHTML = LEAF_SVG(['#4FE08F', '#2F9E5B', '#7DBA3A'][i % 3]); }
+      else { b.className = 'bub' + (o2 ? ' o2' : ''); if (o2) b.textContent = 'O₂'; else { const r = 10 + Math.random() * 18; b.style.width = b.style.height = r + 'px'; } }
+      b.style.left = (mx + mw * .8) + 'px'; b.style.top = (my + 10) + 'px';
+      FX.appendChild(b);
+      const dx = -Math.random() * W * .7 + 60, dy = -(my + 40) - Math.random() * 60;
+      b.animate([{ transform: 'translate(0,0) scale(.3) rotate(0deg)', opacity: 0 }, { opacity: 1, offset: .15 },
+                 { transform: `translate(${dx}px, ${dy}px) scale(1.2) rotate(${Math.random() * 540 - 270}deg)`, opacity: 0 }],
+        { duration: 2600 + Math.random() * 1400, delay: i * 70, easing: 'cubic-bezier(.2,.6,.4,1)', fill: 'forwards' });
+    }
+  }, 3600);
+  setTimeout(() => {
+    m.animate([{ transform: 'translateY(0) scale(1)' }, { transform: 'translateY(-14px) scale(1.03)' }, { transform: 'translateY(560px) scale(.6)' }], { duration: 800, easing: 'ease-in', fill: 'forwards' });
+  }, 6800);
+  setTimeout(() => { FX.innerHTML = ''; surpriseBusy = false; }, 8000);
+}
+function leafConfetti(n = 36) {
+  if (REDUCED || !FX || !FX.animate) return;
+  const W = innerWidth, H = innerHeight;
+  for (let i = 0; i < n; i++) {
+    const c = document.createElement('div'); c.className = 'cf';
+    c.innerHTML = i % 4 === 0 ? '<span class="bub o2" style="position:static;display:inline-block">O₂</span>' : LEAF_SVG(['#4FE08F', '#2F9E5B', '#7DBA3A', '#3FCF9A'][i % 4]);
+    c.style.left = Math.random() * W + 'px';
+    FX.appendChild(c);
+    const a = c.animate([{ transform: 'translate(0,0) rotate(0deg)' }, { transform: `translate(${Math.random() * 160 - 80}px, ${H + 80}px) rotate(${Math.random() * 720 - 360}deg)` }],
+      { duration: 2400 + Math.random() * 1600, delay: Math.random() * 600, easing: 'cubic-bezier(.3,.1,.6,1)', fill: 'forwards' });
+    a.onfinish = () => c.remove();
+  }
+}
+setTimeout(surprise, 3500);
+setInterval(() => { if (!document.hidden) surprise(); }, 40000);
 
 render();
 </script>
