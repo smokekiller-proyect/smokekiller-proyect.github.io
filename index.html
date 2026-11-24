@@ -143,6 +143,53 @@ button.brand{cursor:pointer;background:none;border:none;color:#fff;padding:6px 4
 .smog .lbl{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:700 18px Inter,sans-serif;color:#fff}
 .sk-hero{position:absolute;width:240px}
 .sk-hero svg{display:block;width:100%;height:auto}
+/* ===== player + live results ===== */
+.join{margin-top:28px;display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end}
+.join label{display:flex;flex-direction:column;gap:8px;font-weight:700;font-size:17px;flex:1 1 280px;max-width:460px}
+.join input{font:600 22px Inter,sans-serif;padding:14px 18px;border-radius:14px;border:2px solid var(--line);background:#fff;color:var(--ink);min-height:56px}
+.join input:focus{outline:3px solid var(--blue);outline-offset:2px}
+.hint{font-size:15px;color:var(--muted);margin-top:12px}
+.linkrow{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}
+.linkbtn{background:none;border:none;padding:10px 4px;font-weight:700;font-size:16px;color:var(--green-d);text-decoration:underline;min-height:44px}
+.popts{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px;margin-top:24px}
+button.opt{width:100%;cursor:pointer}
+button.opt:hover:not(:disabled){border-color:var(--ink)}
+button.opt:disabled{cursor:default}
+.opt.wrong{border-color:var(--red);background:#FBEBEB}
+.verdict{font-family:'Space Grotesk',sans-serif;font-size:26px;margin:22px 0 0}
+.verdict.ok{color:var(--green-d)} .verdict.no{color:var(--red)}
+.score-big{font-family:'Space Grotesk',sans-serif;font-size:clamp(80px,14vw,150px);line-height:1;color:var(--green)}
+.score-big small{font-size:.4em;color:var(--muted)}
+.pl-pick{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px;margin-top:16px}
+.pl-pick button{padding:14px 16px;border-radius:14px;border:2px solid var(--line);background:#fff;font:600 17px Inter,sans-serif;text-align:left;color:var(--ink);min-height:52px}
+.pl-pick button[aria-pressed="true"]{border-color:var(--green);background:#E6F4EC}
+.msg{margin-top:16px;font-size:17px;font-weight:600}
+.msg.err{color:var(--red)} .msg.ok{color:var(--green-d)}
+.lb-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px}
+.live{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:15px;color:var(--green-d)}
+.live i{width:10px;height:10px;border-radius:5px;background:var(--green);animation:pulse 1.4s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+.pod3{display:grid;grid-template-columns:1fr 1.15fr 1fr;gap:14px;align-items:end;margin-top:26px}
+.pcard{border-radius:20px;background:#fff;border:2px solid var(--line);padding:18px;text-align:center}
+.pcard .medal{width:46px;height:46px;border-radius:23px;margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font:700 22px 'Space Grotesk',sans-serif;color:#fff}
+.pcard .nm{font-weight:700;font-size:22px;word-break:break-word}
+.pcard .sc{font-family:'Space Grotesk',sans-serif;font-size:40px;line-height:1.1}
+.pcard.first{border-color:var(--green);background:#E6F4EC;padding:26px 18px}
+.pcard.first .sc{font-size:54px}
+.lb-list{margin-top:18px;display:flex;flex-direction:column;gap:8px}
+.lb-row{display:grid;grid-template-columns:52px 1fr auto;gap:12px;align-items:center;padding:12px 18px;border-radius:14px;background:#fff;border:1.5px solid var(--line);font-size:20px}
+.lb-row .rk{font-family:'Space Grotesk',sans-serif;color:var(--muted)}
+.lb-row .nm{font-weight:600;word-break:break-word}
+.lb-row .sc{font-family:'Space Grotesk',sans-serif;font-size:24px}
+.lb-row.me{border-color:var(--blue);background:#E7F1FB}
+.lb-empty{margin-top:26px;padding:28px;border-radius:20px;background:#fff;border:2px dashed var(--line);font-size:22px;text-align:center;color:var(--muted)}
+.lb-grid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:24px;margin-top:8px;align-items:start}
+@media (max-width:900px){.lb-grid{grid-template-columns:1fr}.pod3{grid-template-columns:1fr}}
+.tally{display:flex;flex-direction:column;gap:10px;margin-top:12px}
+.tally .t{display:grid;grid-template-columns:1fr 40px;gap:8px;font-size:15px;font-weight:600}
+.tally .bar{grid-column:1 / -1;height:12px;border-radius:6px;background:#E3E9E5;overflow:hidden}
+.tally .bar span{display:block;height:100%;background:var(--green)}
+
 @media (max-width:640px){.sk-hero{width:160px}.say{left:auto;right:0;top:-48px;font-size:14px}.scene{height:120px}.skb{transform:scale(.8);transform-origin:bottom left}}
 .sk-hero .fan{animation-duration:.5s}
 .sk-hero .tube{animation-duration:1s}
@@ -206,7 +253,7 @@ button.brand{cursor:pointer;background:none;border:none;color:#fff;padding:6px 4
 <script>
 const TEAM_COLORS = ['#2F9E5B', '#2B7BD6', '#E0A23A', '#B5468C'];
 const S = {
-  view: 'inicio',
+  view: (location.hash === '#results') ? 'results' : (location.hash === '#presenter' ? 'inicio' : 'play'),
   teams: [{ name: 'Green Team', pts: 0 }, { name: 'Blue Team', pts: 0 }, { name: 'Yellow Team', pts: 0 }],
   r1: 0, hands: [0, 0, 0, 0],
   q: 0, revealed: false, awarded: {},
@@ -214,6 +261,12 @@ const S = {
   pledges: [0, 0, 0, 0, 0, 0],
 };
 const VIEWS = [['inicio', 'Start'], ['r1', '1 · What about you?'], ['r2', '2 · Trivia'], ['final', 'Pledge & winner']];
+const PRESENTER = ['inicio', 'r1', 'r2', 'final'];
+const TOPIC = 'smokekiller-proyect-live-8q3v2x';
+const NTFY = 'https://ntfy.sh/' + TOPIC;
+const P = { draft: '', name: '', id: Math.random().toString(36).slice(2, 10), started: false, i: 0, score: 0, picked: null, pledge: null, sent: false, sending: false, err: '' };
+const LB = { entries: [], loaded: false, ok: true, timer: null, lastCount: 0 };
+let ROUND = 0; try { ROUND = +localStorage.getItem('sk-round') || 0; } catch (e) {}
 
 const R1 = [
   'Raise your hand if you have ever coughed because of smoke from a bus or a car.',
@@ -249,12 +302,136 @@ const PLEDGES = ['Walk, bike or take the bus when I can', 'Never burn trash or l
 const $ = (s, r = document) => r.querySelector(s);
 const esc = (t) => String(t).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
-function go(v) { stopTimers(); S.view = v; render(); window.scrollTo(0, 0); if (v === 'final') setTimeout(() => leafConfetti(60), 300); else if (v === 'r1' || v === 'r2') setTimeout(surprise, 600); }
+function go(v) { stopTimers(); S.view = v; P.err = ''; const h = v === 'results' ? '#results' : (PRESENTER.includes(v) ? '#presenter' : ''); try { history.replaceState(null, '', location.pathname + h); } catch (e) {} if (v === 'results') startPolling(); else stopPolling(); render(); window.scrollTo(0, 0); if (v === 'final') setTimeout(() => leafConfetti(60), 300); else if (v === 'r1' || v === 'r2') setTimeout(surprise, 600); }
 function stopTimers() { clearInterval(S.timer); S.timer = null; }
 
 function renderNav() {
-  $('#nav').innerHTML = VIEWS.map(([k, l]) => `<button data-go="${k}" ${S.view === k ? 'aria-current="step"' : ''}>${l}</button>`).join('');
-  $('#strip').innerHTML = S.teams.map((t, i) => `<span class="chip"><span class="dot" style="background:${TEAM_COLORS[i]}"></span>${esc(t.name)} <span class="pts">${t.pts}</span></span>`).join('');
+  const pres = PRESENTER.includes(S.view);
+  const items = [['play', 'Play'], ['results', 'Live results'], ['inicio', 'Presenter']].concat(pres ? VIEWS.slice(1) : []);
+  $('#nav').innerHTML = items.map(([k, l]) => `<button data-go="${k}" ${S.view === k ? 'aria-current="step"' : ''}>${l}</button>`).join('');
+  $('#strip').innerHTML = pres ? S.teams.map((t, i) => `<span class="chip"><span class="dot" style="background:${TEAM_COLORS[i]}"></span>${esc(t.name)} <span class="pts">${t.pts}</span></span>`).join('') : '';
+}
+
+// ---------- player ----------
+function vPlay() {
+  if (!P.started) {
+    return `<div class="hero-grid">
+    <div>
+      <div class="eyebrow">Smoke Killer Challenge · ${QS.length} questions</div>
+      <h1>How clean is the air <b>you breathe?</b></h1>
+      <p class="lead">Write your name, answer the questions and see your result on the big screen.</p>
+      <form class="join" data-form="join">
+        <label for="pname">Your name<input id="pname" maxlength="20" autocomplete="nickname" value="${esc(P.draft)}" placeholder="Type your name"></label>
+        <button class="btn green" type="submit">Start playing →</button>
+      </form>
+      <p class="hint">Your name and score will appear on the live results screen.</p>
+      ${P.err ? `<p class="msg err" role="alert">${esc(P.err)}</p>` : ''}
+      <div class="linkrow"><button class="linkbtn" data-go="results">See live results</button></div>
+    </div>
+    <figure class="hero-fig"><img src="media/rooftop-city.jpg" alt="3D render of the Smoke Killer unit on a city rooftop, pulling in street smoke and releasing oxygen"><figcaption>Smoke Killer on a city rooftop</figcaption></figure>
+  </div>`;
+  }
+  if (P.i < QS.length) {
+    const Q = QS[P.i], colors = ['#2B7BD6', '#E0A23A', '#B5468C', '#2F9E5B'], done = P.picked !== null;
+    const opts = Q.o.map((o, k) => {
+      let cls = '';
+      if (done) cls = k === Q.a ? 'right' : (k === P.picked ? 'wrong' : 'dim');
+      return `<button class="opt ${cls}" data-pick="${k}" ${done ? 'disabled' : ''}><span class="l" style="background:${colors[k]}">${k + 1}</span>${o}</button>`;
+    }).join('');
+    return `<div class="eyebrow">${esc(P.name)} · Question ${P.i + 1} of ${QS.length} · ${P.score} correct</div>
+    <div class="progress"><span style="width:${(P.i / QS.length) * 100}%"></span></div>
+    <p class="big-q">${Q.q}</p>
+    <div class="popts">${opts}</div>
+    ${done ? `<p class="verdict ${P.picked === Q.a ? 'ok' : 'no'}" role="status">${P.picked === Q.a ? 'Correct! +1' : 'Not quite.'}</p>
+      <div class="explain">${Q.e}${Q.s ? `<span class="src">${Q.s}</span>` : ''}</div>
+      <div class="row" style="margin-top:22px"><button class="btn green" data-act="pnext">${P.i === QS.length - 1 ? 'See my result →' : 'Next question →'}</button></div>` : ''}`;
+  }
+  const s = P.score, t = QS.length;
+  const msg = s >= 7 ? 'Clean-air expert!' : s >= 4 ? 'Great job, you are learning fast!' : 'Every breath counts. Keep learning!';
+  return `<div class="eyebrow">Your result</div>
+  <h2>Well done, ${esc(P.name)}!</h2>
+  <div class="score-big" style="margin-top:12px">${s}<small> / ${t}</small></div>
+  <p class="lead" style="margin-top:8px">${msg}</p>
+  <div class="card" style="margin-top:26px">
+    <div class="eyebrow" style="color:var(--ink)">Pick your clean-air pledge</div>
+    <div class="pl-pick">${PLEDGES.map((p, i) => `<button data-pp="${i}" aria-pressed="${P.pledge === i}" ${P.sent ? 'disabled' : ''}>${p}</button>`).join('')}</div>
+    ${P.sent ? `<p class="msg ok" role="status">Sent! Look at the big screen.</p>
+      <div class="row" style="margin-top:16px"><button class="btn green" data-go="results">See live results →</button></div>`
+      : `<div class="row" style="margin-top:18px"><button class="btn green" data-act="psend" ${P.pledge === null || P.sending ? 'disabled' : ''}>${P.sending ? 'Sending…' : 'Send my result to the big screen'}</button></div>
+      ${P.pledge === null ? '<p class="hint">Choose a pledge first.</p>' : ''}
+      ${P.err ? `<p class="msg err" role="alert">${esc(P.err)}</p>` : ''}`}
+  </div>
+  <div class="linkrow"><button class="linkbtn" data-act="again">Play again with another name</button></div>`;
+}
+
+async function sendResult() {
+  P.sending = true; P.err = ''; render();
+  try {
+    const body = JSON.stringify({ v: 1, id: P.id, n: P.name, s: P.score, t: QS.length, p: P.pledge });
+    const r = await fetch(NTFY, { method: 'POST', body });
+    if (!r.ok) throw new Error('status ' + r.status);
+    P.sent = true; setTimeout(() => leafConfetti(40), 100);
+  } catch (e) {
+    P.err = 'Could not send your result. Check your internet connection and try again.';
+  }
+  P.sending = false; render();
+}
+
+// ---------- live results ----------
+function cleanEntry(m) {
+  let o; try { o = JSON.parse(m.message); } catch (e) { return null; }
+  if (!o || o.v !== 1 || typeof o.n !== 'string' || typeof o.id !== 'string') return null;
+  const n = o.n.trim().slice(0, 20); if (!n) return null;
+  const t = QS.length, sc = Math.max(0, Math.min(t, Math.round(+o.s || 0)));
+  const p = Number.isInteger(o.p) && o.p >= 0 && o.p < PLEDGES.length ? o.p : null;
+  return { id: o.id.slice(0, 16), n, s: sc, p, time: m.time || 0 };
+}
+async function pollResults() {
+  try {
+    const r = await fetch(`${NTFY}/json?poll=1&since=${ROUND ? ROUND : 'all'}`);
+    if (!r.ok) throw new Error('status ' + r.status);
+    const txt = await r.text();
+    const byId = new Map();
+    txt.split('\n').forEach(line => {
+      if (!line.trim()) return;
+      let m; try { m = JSON.parse(line); } catch (e) { return; }
+      if (m.event !== 'message' || (ROUND && m.time < ROUND)) return;
+      const e = cleanEntry(m); if (e) byId.set(e.id, e);
+    });
+    const list = [...byId.values()].sort((a, b) => b.s - a.s || a.time - b.time);
+    const grew = LB.loaded && list.length > LB.lastCount;
+    LB.entries = list; LB.loaded = true; LB.ok = true; LB.lastCount = list.length;
+    if (S.view === 'results') { render(); if (grew) leafConfetti(24); }
+  } catch (e) {
+    LB.ok = false; LB.loaded = true;
+    if (S.view === 'results') render();
+  }
+}
+function startPolling() { if (LB.timer) return; pollResults(); LB.timer = setInterval(pollResults, 4000); }
+function stopPolling() { clearInterval(LB.timer); LB.timer = null; }
+
+function vResults() {
+  const E = LB.entries, medal = ['#E0A23A', '#9AA6B0', '#C27B45'];
+  const top = E.slice(0, 3), rest = E.slice(3);
+  const card = (e, r) => e ? `<div class="pcard ${r === 0 ? 'first' : ''} ${e.id === P.id ? 'me' : ''}"><div class="medal" style="background:${medal[r]}">${r + 1}</div><div class="nm">${esc(e.n)}</div><div class="sc">${e.s}<small style="font-size:.5em;color:var(--muted)">/${QS.length}</small></div></div>` : '<div></div>';
+  const counts = PLEDGES.map((_, i) => E.filter(e => e.p === i).length), maxc = Math.max(1, ...counts);
+  return `<div class="lb-head">
+    <div><div class="eyebrow">Live results</div><h2>Who knows the most about clean air?</h2></div>
+    <span class="live" aria-live="polite">${LB.ok ? `<i></i>Live · ${E.length} player${E.length === 1 ? '' : 's'}` : '<span style="color:var(--red)">Connection problem, retrying…</span>'}</span>
+  </div>
+  <p class="lead" style="margin-top:10px">Scan the QR code or open <b>smokekiller-proyect.github.io</b>, write your name and play.</p>
+  ${!LB.loaded ? '<div class="lb-empty">Loading results…</div>' : E.length === 0 ? '<div class="lb-empty">No players yet. Be the first one!</div>' : `
+  <div class="lb-grid">
+    <div>
+      <div class="pod3">${card(top[1], 1)}${card(top[0], 0)}${card(top[2], 2)}</div>
+      <div class="lb-list">${rest.map((e, i) => `<div class="lb-row ${e.id === P.id ? 'me' : ''}"><span class="rk">${i + 4}</span><span class="nm">${esc(e.n)}</span><span class="sc">${e.s}/${QS.length}</span></div>`).join('')}</div>
+    </div>
+    <div class="card">
+      <div class="eyebrow" style="color:var(--ink)">The audience pledges to</div>
+      <div class="tally">${PLEDGES.map((p, i) => `<div class="t"><span>${p}</span><b style="text-align:right">${counts[i]}</b><div class="bar"><span style="width:${(counts[i] / maxc) * 100}%"></span></div></div>`).join('')}</div>
+    </div>
+  </div>`}
+  <div class="linkrow"><button class="linkbtn" data-go="play">Play</button><button class="linkbtn" data-act="newround">Start a new round (clear the screen)</button></div>`;
 }
 
 function vInicio() {
@@ -358,7 +535,7 @@ function podium() {
 
 function render() {
   renderNav();
-  const v = { inicio: vInicio, r1: vR1, r2: vR2, final: vFinal }[S.view];
+  const v = { play: vPlay, results: vResults, inicio: vInicio, r1: vR1, r2: vR2, final: vFinal }[S.view];
   $('#main').innerHTML = v();
 }
 
@@ -369,11 +546,17 @@ function award(i, q) {
 }
 
 document.addEventListener('click', (e) => {
-  const b = e.target.closest('button'); if (!b) return;
+  const b = e.target.closest('button'); if (!b || b.getAttribute('type') === 'submit') return;
   if (b.dataset.go) return go(b.dataset.go);
   if (b.dataset.award !== undefined) { award(+b.dataset.award, S.q); return render(); }
   if (b.dataset.pl !== undefined) { const i = +b.dataset.pl; S.pledges[i] = Math.max(0, S.pledges[i] + +b.dataset.d); return render(); }
+  if (b.dataset.pick !== undefined && P.picked === null) { P.picked = +b.dataset.pick; if (P.picked === QS[P.i].a) { P.score++; setTimeout(() => leafConfetti(16), 50); } return render(); }
+  if (b.dataset.pp !== undefined && !P.sent) { P.pledge = +b.dataset.pp; return render(); }
   const a = b.dataset.act;
+  if (a === 'pnext') { P.i++; P.picked = null; render(); window.scrollTo(0, 0); return; }
+  if (a === 'psend') { if (P.pledge !== null && !P.sending && !P.sent) sendResult(); return; }
+  if (a === 'again') { Object.assign(P, { draft: '', name: '', id: Math.random().toString(36).slice(2, 10), started: false, i: 0, score: 0, picked: null, pledge: null, sent: false, sending: false, err: '' }); return render(); }
+  if (a === 'newround') { ROUND = Math.floor(Date.now() / 1000); try { localStorage.setItem('sk-round', String(ROUND)); } catch (e) {} LB.entries = []; LB.lastCount = 0; render(); pollResults(); return; }
   if (a === 'addTeam' && S.teams.length < 4) { S.teams.push({ name: ['Green Team', 'Blue Team', 'Yellow Team', 'Purple Team'][S.teams.length], pts: 0 }); }
   if (a === 'rmTeam' && S.teams.length > 2) { S.teams.pop(); }
   if (a === 'handUp') S.hands[S.r1]++;
@@ -391,15 +574,24 @@ document.addEventListener('click', (e) => {
   render();
 });
 
+document.addEventListener('submit', (e) => {
+  if (e.target.dataset.form !== 'join') return;
+  e.preventDefault();
+  const n = (P.draft || '').trim().slice(0, 20);
+  if (!n) { P.err = 'Please write your name first.'; render(); const i = $('#pname'); if (i) i.focus(); return; }
+  Object.assign(P, { name: n, started: true, err: '', i: 0, score: 0, picked: null, pledge: null, sent: false });
+  render(); window.scrollTo(0, 0);
+});
 document.addEventListener('input', (e) => {
+  if (e.target.id === 'pname') { P.draft = e.target.value; return; }
   const i = e.target.dataset.team; if (i === undefined) return;
   S.teams[+i].name = e.target.value || `Team ${+i + 1}`;
   renderNav();
 });
 
 document.addEventListener('keydown', (e) => {
-  if (e.target.tagName === 'INPUT') return;
-  const order = VIEWS.map(v => v[0]);
+  if (e.target.tagName === 'INPUT' || !PRESENTER.includes(S.view)) return;
+  const order = PRESENTER;
   if (e.key === 'ArrowRight') {
     if (S.view === 'r1' && S.r1 < R1.length) { S.r1++; return render(); }
     if (S.view === 'r2' && S.q < QS.length) { if (!S.revealed) { stopTimers(); S.revealed = true; } else { S.q++; S.revealed = false; S.left = 20; } return render(); }
@@ -486,6 +678,8 @@ function leafConfetti(n = 36) {
 setTimeout(surprise, 3500);
 setInterval(() => { if (!document.hidden) surprise(); }, 40000);
 
+window.addEventListener('hashchange', () => { const v = location.hash === '#results' ? 'results' : (location.hash === '#presenter' ? 'inicio' : 'play'); if (v !== S.view) go(v); });
+if (S.view === 'results') startPolling();
 render();
 </script>
 </body>
