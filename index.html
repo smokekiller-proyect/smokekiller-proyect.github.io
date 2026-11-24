@@ -403,14 +403,16 @@ function cleanEntry(m) {
 }
 async function pollResults() {
   try {
-    const r = await fetch(`${NTFY}/json?poll=1&since=${ROUND ? ROUND : 'all'}`);
+    const d0 = new Date(); d0.setHours(0, 0, 0, 0);
+    const FROM = Math.max(ROUND || 0, Math.floor(d0.getTime() / 1000));
+    const r = await fetch(`${NTFY}/json?poll=1&since=${FROM}`);
     if (!r.ok) throw new Error('status ' + r.status);
     const txt = await r.text();
     const byId = new Map();
     txt.split('\n').forEach(line => {
       if (!line.trim()) return;
       let m; try { m = JSON.parse(line); } catch (e) { return; }
-      if (m.event !== 'message' || (ROUND && m.time < ROUND)) return;
+      if (m.event !== 'message' || m.time < FROM) return;
       const e = cleanEntry(m); if (e) byId.set(e.id, e);
     });
     const list = [...byId.values()].sort((a, b) => b.s - a.s || a.time - b.time);
